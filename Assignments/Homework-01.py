@@ -164,11 +164,11 @@ print(d)
 """
 J 
 """
-print("J:")
+print("J")
 def rm(d, x):
-	for key in d.keys():
-		if d[key] == x:
-			del d[key]
+	remove = [k for k in d if k == x]
+	for k in remove:
+		del d[k]
 	
-rm(d, 4)
+rm(d, 1)
 print(d)
