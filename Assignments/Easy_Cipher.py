@@ -102,8 +102,6 @@ class ShiftCipher(object):
 	"""
 	def __decrypt(self):
 		self.plainText= ''
-		
-		
 		for letter in self.cipherText:
 			self.plainText += chr((((ord(letter)-65) - self.shift)%26)+65)
 	
