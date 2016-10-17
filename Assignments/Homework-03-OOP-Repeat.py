@@ -42,10 +42,16 @@ class Bag(object):
         self.skittles.append(s)
         
     def take_color(self, color):
+	"""takes a color and removes (and returns) 
+	a Skittle of that color from the bag
+	"""
     	for color in self.skittles:
     		return self.Skittle(self.color).pop(0)
     	
     def take_all(self):
+	"""takes all the Skittles in the current bag and prints 
+	the color of the each Skittle taken from the bag.
+	"""
     	return self.take_skittle()
     	
 
