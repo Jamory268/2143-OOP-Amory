@@ -22,6 +22,8 @@ class Dog(Pet):
     def talk(self):
         print("woof!")
         
+        
+#Answer 1
 class Cat(Pet):
     def __init__(self, name, owner, lives=9):
     	Pet.__init__(self, name, owner)
@@ -46,7 +48,7 @@ class Cat(Pet):
         else:
         	self.is_alive = False
         
-        
+#Answer 2   
 class Foo(object):
     def __init__(self, a):
         self.a = a
