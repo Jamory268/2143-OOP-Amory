@@ -42,10 +42,13 @@ class Pig(object):
     def Roll(self):
         scores = []
         for d in self.DiceList:
-            scores.append(d.Roll())
-            if self.SkunkValue in scores:
-                return 0 
+        	if d.Roll() == 0:
+        		return 0
+        	else:
+        		scores.append(d.Roll())
+ 
         return sum(scores)
+      
 
 ##############################################################################
 ##############################################################################
@@ -82,12 +85,12 @@ class Player(object):
     @Returns: None
     """
     def AddOpponents(self,opponent):
-        if not type(opponent) == list and not opponent.Name == self.Name:
-            self.Opponents[opponent.Name] = opponent
-        else:
-            for op in opponent:
-                if not op.Name == self.Name:
-                    self.Opponents[op.Name] = op
+        # if not type(opponent) == list and not opponent.Name == self.Name:
+        #     self.Opponents[opponent.Name] = opponent
+        # else:
+        for op in opponent:
+            if not op.Name == self.Name:
+                self.Opponents[op.Name] = op
 
     """
     @Method: __str__
@@ -156,7 +159,7 @@ class Player(object):
     def RandomRoll(self):
         Score = 0
         NumRolls = 0
-        for i in range(random.randint(1,7)):
+        for i in range(random.randint(1,self.Strategies['Random'])):
             NumRolls += 1
             roll = self.pig.Roll()
             if roll == 0:
@@ -166,23 +169,18 @@ class Player(object):
         return (Score,NumRolls)
 
             
-    def Target_Score(self):
+    def Aggressive(self):
         pass
         
-    def Target_Roll(self):
+    def Cautious(self):
         pass
 
-    def Sprint_To_Finish(self):
+    def Robust(self):
         pass
         
-    def Mimic_Opponent(self):
+    def CopyCat(self):
         pass
 
-    def Situational(self):
-        pass
-        
-    def Combination(self):
-        pass
 
 
 ##############################################################################
@@ -253,6 +251,7 @@ class Game(object):
             print(self)
             for name,PlayerObj in self.Players.items():
                 PlayerObj.Roll()
+        print ("%s has just reached %i points and is stopping." % (self.WinnerName , self.TargetScore))
        
     """
     @Method: WinnerExists
