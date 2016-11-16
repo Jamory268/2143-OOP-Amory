@@ -42,10 +42,13 @@ class Pig(object):
     def Roll(self):
         scores = []
         for d in self.DiceList:
-            scores.append(d.Roll())
-            if self.SkunkValue in scores:
-                return 0 
+        	if d.Roll() == 0:
+        		return 0
+        	else:
+        		scores.append(d.Roll())
+ 
         return sum(scores)
+      
 
 ##############################################################################
 ##############################################################################
@@ -140,13 +143,15 @@ class Player(object):
         if self.Strategy == 'Random':
             Score,NumRolls = self.RandomRoll()
         elif self.Strategy == 'Aggressive':
-            Score,NumRolls = self.Aggressive()
+            pass
         elif self.Strategy == 'Cautious':
-            Score,NumRolls = self.Cautious()
+            pass
         elif self.Strategy == 'Robust':
             pass
         elif self.Strategy == 'CopyCat':
             pass
+        elif self.Strategy == 'SprintToFinish':
+            self.SprintToFinish()
         
         self.TotalScore += Score
         self.LastScore = Score
@@ -156,7 +161,7 @@ class Player(object):
     def RandomRoll(self):
         Score = 0
         NumRolls = 0
-        for i in range(random.randint(1,self.Strategies['Random'])):
+        for i in range(random.randint(1, 7)):
             NumRolls += 1
             roll = self.pig.Roll()
             if roll == 0:
@@ -169,25 +174,23 @@ class Player(object):
     def Aggressive(self):
         Score = 0
         NumRolls = 0
-        for i in range(random.randint(1,10)):
-            NumRolls += 1
-            roll = self.pig.Roll()
-            if roll == 0:
-                break
-            Score += roll
-        
-        return (Score,NumRolls)
+        for i in range(random.randint(1, 10)):
+        	roll = self.pig.Roll()
+        	NumRolls += 1
+        	if roll == 0:
+        		break
+        	Score += roll
+        	return (Score,NumRolls)
         
     def Cautious(self):
         Score = 0
         NumRolls = 0
-        for i in range(random.randint(1,5)):
-            NumRolls += 1
-            roll = self.pig.Roll()
-            if roll == 0:
-                break
-            Score += roll
-        
+        for i in range(random.randint(1, 5)):
+        	roll = self.pig.Roll()
+        	NumRolls += 1
+        	if roll == 0:
+        		break
+        	Score += roll
         return (Score,NumRolls)
 
     def Robust(self):
@@ -266,6 +269,7 @@ class Game(object):
             print(self)
             for name,PlayerObj in self.Players.items():
                 PlayerObj.Roll()
+        print ("%s has just reached %i points and is stopping." % (self.WinnerName , self.TargetScore))
        
     """
     @Method: WinnerExists
@@ -303,7 +307,6 @@ class Game(object):
 
 ##############################################################################
 ##############################################################################
-
 
 
 def main():
